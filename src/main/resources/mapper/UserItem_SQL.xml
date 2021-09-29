@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="userItem"> 
+
+	<resultMap id="UserItem" type="com.vassystem.dto.UserItem">
+ 		<result property = "item_uniqueID" 			column = "item_uniqueID"/>
+ 		<result property = "user_account" 			column = "user_account"/>
+ 		<result property = "item_id" 		column = "item_id"/>
+ 		<result property = "item_cnt" 			column = "item_cnt"/>
+ 		<result property = "item_usage" 		column = "item_usage"/>
+ 		<result property = "remain_time"			column = "remain_time"/>
+ 		<result property = "check_flag" 			column = "check_flag"/>
+	</resultMap>
+
+	<select id="buyItem" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="UserItem"> 
+	{ 
+		call abn_MgmtItem_out (
+			#{inParam01, jdbcType = INTEGER, mode = IN},	<!-- job_code -->
+			#{inParam02, jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam03, jdbcType = INTEGER, mode = IN},	<!-- item_id -->
+			#{inParam04, jdbcType = INTEGER, mode = IN},	<!-- item_cnt -->
+			<choose>
+	      		<when test="inParam05 != 0">
+	           		#{inParam05, jdbcType = INTEGER, mode = IN},	<!-- item_payment -->
+	      		</when>
+	      		<otherwise>
+	            	null,
+	   			</otherwise>
+	   		</choose>
+	   		
+		)
+	}
+	</select>
+</mapper>

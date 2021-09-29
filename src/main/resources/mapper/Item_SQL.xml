@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="item"> 
+
+	<resultMap id="Item" type="com.vassystem.dto.Item">
+ 		<result property = "item_id" 			column = "item_id"/>
+ 		<result property = "item_nm" 			column = "item_nm"/>
+ 		<result property = "item_category" 		column = "item_category"/>
+ 		<result property = "item_type" 			column = "item_type"/>
+ 		<result property = "item_price" 		column = "item_price"/>
+ 		<result property = "unit_cd"			column = "unit_cd"/>
+ 		<result property = "item_desc" 			column = "item_desc"/>
+ 		<result property = "item_value" 		column = "item_value"/>
+ 		<result property = "item_cnt" 			column = "item_cnt"/>
+ 		<result property = "rare_degree" 		column = "rare_degree"/>
+ 		<result property = "item_period_flag" 	column = "item_period_flag"/>
+ 		<result property = "item_period" 		column = "item_period"/>
+ 		<result property = "item_dup_flag" 		column = "item_dup_flag"/>
+ 		<result property = "item_new_flag" 		column = "item_new_flag"/>
+ 		<result property = "item_order" 		column = "item_order"/>
+ 		<result property = "item_img_no" 		column = "item_img_no"/>
+ 		<result property = "item_equip_flag" 	column = "item_equip_flag"/>
+ 		<result property = "item_grade" 		column = "item_grade"/>
+ 		<result property = "use_flag" 			column = "use_flag"/>
+ 		<result property = "create_dt" 			column = "create_dt"/>
+ 		<result property = "del_dt" 			column = "del_dt"/>
+	</resultMap>
+
+	<select id="selectItemList" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="Item"> 
+	{ 
+		call abn_getItemList (
+			#{inParam01, jdbcType = INTEGER, mode = IN},
+			<choose>
+	      		<when test="inParam02 != 0">
+	           		#{inParam02, jdbcType = INTEGER, mode = IN},
+	      		</when>
+	      		<otherwise>
+	            	null,
+	   			</otherwise>
+	   		</choose>
+	   		<choose>
+	      		<when test="inParam03 != 0">
+	           		#{inParam03, jdbcType = INTEGER, mode = IN},
+	      		</when>
+	      		<otherwise>
+	            	null,
+	   			</otherwise>
+	   		</choose>
+	   		<choose>
+	      		<when test="inParam04 != 0">
+	           		#{inParam04, jdbcType = INTEGER, mode = IN}
+	      		</when>
+	      		<otherwise>
+	            	null
+	   			</otherwise>
+	   		</choose>
+		)
+	}
+	</select>
+</mapper>
