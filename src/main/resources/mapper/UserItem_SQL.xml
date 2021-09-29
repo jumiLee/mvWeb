@@ -13,22 +13,16 @@
  		<result property = "check_flag" 			column = "check_flag"/>
 	</resultMap>
 
-	<select id="buyItem" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="UserItem"> 
+	<select id="buyItem" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
 	{ 
 		call abn_MgmtItem_out (
 			#{inParam01, jdbcType = INTEGER, mode = IN},	<!-- job_code -->
 			#{inParam02, jdbcType = INTEGER, mode = IN},	<!-- user_account -->
 			#{inParam03, jdbcType = INTEGER, mode = IN},	<!-- item_id -->
 			#{inParam04, jdbcType = INTEGER, mode = IN},	<!-- item_cnt -->
-			<choose>
-	      		<when test="inParam05 != 0">
-	           		#{inParam05, jdbcType = INTEGER, mode = IN},	<!-- item_payment -->
-	      		</when>
-	      		<otherwise>
-	            	null,
-	   			</otherwise>
-	   		</choose>
-	   		
+			#{inParam05, jdbcType = INTEGER, mode = IN},	<!-- item_payment -->
+			#{outParam01, 	 jdbcType = INTEGER, mode = OUT},	<!-- result code -->
+	   		#{outStrParam01, jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
 		)
 	}
 	</select>
