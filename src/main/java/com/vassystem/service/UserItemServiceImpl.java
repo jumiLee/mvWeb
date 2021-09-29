@@ -1,15 +1,12 @@
 package com.vassystem.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.vassystem.dao.UserItemDAO;
-import com.vassystem.dto.UserItem;
-import com.vassystem.packet.UserItemPacket;
+import com.vassystem.packet.UserItemBuyPacket;
 
 import common.util.ItemMgmtType;
 import common.util.ParamVO;
@@ -23,9 +20,9 @@ public class UserItemServiceImpl implements UserItemService {
 	private UserItemDAO userItemDAO; 
 
 	@Override
-	public UserItemPacket buyItem(int user_account, int item_id) throws Exception {
+	public UserItemBuyPacket buyItem(int user_account, int item_id) throws Exception {
 		
-		UserItemPacket userItemPacket = new UserItemPacket();
+		UserItemBuyPacket userItemBuyPacket = new UserItemBuyPacket();
 		int resultCd = 0;
 		String resultMsg = "";
 		
@@ -33,16 +30,15 @@ public class UserItemServiceImpl implements UserItemService {
 		vo.setInParam01(ItemMgmtType.BUY.getCode()); 
 		vo.setInParam02(user_account); 
 		vo.setInParam03(item_id);
-		vo.setInParam04(0);
+		vo.setInParam04(1);
+		
+		userItemDAO.buyItem(vo);
 		
 		resultCd = vo.getOutParam01();
 		resultMsg = vo.getOutStrParam01();
 		
-		List<UserItem> userItemList = userItemDAO.buyItem(vo);
+		userItemBuyPacket.setHeader(user_account, resultCd, resultMsg);
 		
-		userItemPacket.userItemList = userItemList;
-		userItemPacket.setHeader(user_account, resultCd, resultMsg);
-		
-		return userItemPacket;
+		return userItemBuyPacket;
 	}
 }
