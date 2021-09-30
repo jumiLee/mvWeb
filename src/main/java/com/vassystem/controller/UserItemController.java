@@ -22,8 +22,12 @@ public class UserItemController {
 	/* Buy Item */
 	@RequestMapping(value="/buyItem.do", produces = "application/json")
 	@ResponseBody
-	public UserItemBuyPacket buyItem(@RequestParam int user_account, @RequestParam int item_id) throws Exception {
+	public UserItemBuyPacket buyItem(@RequestParam int user_account, 
+									 @RequestParam int char_id,
+									 @RequestParam int user_char_sn,
+									 @RequestParam int equip_flag,
+									 @RequestParam String item_id_array) throws Exception {
 		
-		return userItemService.buyItem(user_account, item_id);
+		return userItemService.buyItem(user_account, char_id, user_char_sn, equip_flag, item_id_array);
 	}
 }

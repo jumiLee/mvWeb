@@ -15,12 +15,13 @@
 
 	<select id="buyItem" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
 	{ 
-		call abn_MgmtItem_out (
-			#{inParam01, jdbcType = INTEGER, mode = IN},	<!-- job_code -->
-			#{inParam02, jdbcType = INTEGER, mode = IN},	<!-- user_account -->
-			#{inParam03, jdbcType = INTEGER, mode = IN},	<!-- item_id -->
-			#{inParam04, jdbcType = INTEGER, mode = IN},	<!-- item_cnt -->
-			#{inParam05, jdbcType = INTEGER, mode = IN},	<!-- item_payment -->
+		call abn_buyItem (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},	<!-- job_code -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam03, 	jdbcType = INTEGER, mode = IN},	<!-- char_id -->
+			#{inParam04, 	jdbcType = INTEGER, mode = IN},	<!-- user_char_sn -->
+			#{inParam05, 	jdbcType = INTEGER, mode = IN},	<!-- equip_flag -->
+			#{inStrParam01, jdbcType = VARCHAR, mode = IN},	<!-- item_id_array -->
 			#{outParam01, 	 jdbcType = INTEGER, mode = OUT},	<!-- result code -->
 	   		#{outStrParam01, jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
 		)

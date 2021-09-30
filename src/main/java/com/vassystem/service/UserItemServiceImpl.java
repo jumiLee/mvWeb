@@ -20,7 +20,7 @@ public class UserItemServiceImpl implements UserItemService {
 	private UserItemDAO userItemDAO; 
 
 	@Override
-	public UserItemBuyPacket buyItem(int user_account, int item_id) throws Exception {
+	public UserItemBuyPacket buyItem(int user_account, int char_id, int user_char_sn, int equip_flag, String item_id_array) throws Exception {
 		
 		UserItemBuyPacket userItemBuyPacket = new UserItemBuyPacket();
 		int resultCd = 0;
@@ -29,8 +29,10 @@ public class UserItemServiceImpl implements UserItemService {
 		ParamVO vo = new ParamVO(); 
 		vo.setInParam01(ItemMgmtType.BUY.getCode()); 
 		vo.setInParam02(user_account); 
-		vo.setInParam03(item_id);
-		vo.setInParam04(1);
+		vo.setInParam03(char_id);
+		vo.setInParam04(user_char_sn);
+		vo.setInParam05(equip_flag);
+		vo.setInStrParam01(item_id_array);
 		
 		userItemDAO.buyItem(vo);
 		
