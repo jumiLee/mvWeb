@@ -12,6 +12,7 @@ public class UserCharacter extends Character {
 	public int user_char_sn;	
 	public int user_char_lv;
 	public int user_char_exp;
+	public int carry_flag;
 	public String char_cust_info;
 	public Date create_dt;
 	public Date last_mod_dt;

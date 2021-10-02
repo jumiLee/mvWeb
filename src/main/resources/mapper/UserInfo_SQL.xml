@@ -5,8 +5,10 @@
 
 	<resultMap id="userDetail" type="com.vassystem.dto.UserDetail">
 		<result property = "account" 	column = "user_account"/>
- 		<result property = "point" 		column = "user_point"/> 		
- 		<result property = "nickname" 	column = "nickname"/> 		
+ 		<result property = "nickname" 	column = "nickname"/> 	
+ 		<result property = "coin" 		column = "user_coin"/> 	
+ 		<result property = "gold" 		column = "user_gold"/> 
+ 		<result property = "point" 		column = "user_point"/> 
 	</resultMap>
 	
 	<resultMap id="userNotice" type="com.vassystem.dto.UserNotice"> 		

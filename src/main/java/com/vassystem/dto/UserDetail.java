@@ -8,4 +8,6 @@ public class UserDetail {
 	public int account; // 사용자계정
 	public String nickname; // 닉네임
 	public int point; // 게임머니
+	public int coin;
+	public int gold;
 }
