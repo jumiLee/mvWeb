@@ -9,6 +9,7 @@
  		<result property = "char_id" 		column = "char_id"/>
  		<result property = "user_char_lv" 	column = "user_char_lv"/>
  		<result property = "user_char_exp" 	column = "user_char_exp"/>
+ 		<result property = "carry_flag" 	column = "carry_flag"/>
  		<result property = "char_cust_info"	column = "char_cust_info"/>
  		<result property = "create_dt" 		column = "create_dt"/>
  		<result property = "char_nm" 		column = "char_nm"/>

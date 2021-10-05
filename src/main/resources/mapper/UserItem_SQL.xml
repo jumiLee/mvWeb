@@ -3,6 +3,31 @@
 
 <mapper namespace="userItem"> 
 
+
+	<resultMap id="Item" type="com.vassystem.dto.Item">
+ 		<result property = "item_id" 			column = "item_id"/>
+ 		<result property = "item_nm" 			column = "item_nm"/>
+ 		<result property = "item_category" 		column = "item_category"/>
+ 		<result property = "item_type" 			column = "item_type"/>
+ 		<result property = "item_price"			column = "item_price"/>
+ 		<result property = "unit_cd" 			column = "unit_cd"/>
+ 		<result property = "item_desc" 			column = "item_desc"/>
+ 		<result property = "item_value" 		column = "item_value"/>
+ 		<result property = "item_cnt" 			column = "item_cnt"/>
+ 		<result property = "rare_degree" 		column = "rare_degree"/>
+ 		<result property = "item_period_flag" 	column = "item_period_flag"/>
+ 		<result property = "item_period" 		column = "item_period"/>
+ 		<result property = "item_dup_flag" 		column = "item_dup_flag"/>
+ 		<result property = "item_new_flag" 		column = "item_new_flag"/>
+ 		<result property = "item_order" 		column = "item_order"/>
+ 		<result property = "item_img_no" 		column = "item_img_no"/>
+ 		<result property = "item_equip_flag" 	column = "item_equip_flag"/>
+ 		<result property = "item_grade" 		column = "item_grade"/>
+ 		<result property = "use_flag" 			column = "use_flag"/>
+ 		<result property = "create_dt" 			column = "create_dt"/>
+ 		<result property = "del_dt" 			column = "del_dt"/>
+	</resultMap>
+	
 	<resultMap id="UserItem" type="com.vassystem.dto.UserItem">
  		<result property = "item_uniqueID" 			column = "item_uniqueID"/>
  		<result property = "user_account" 			column = "user_account"/>
@@ -11,6 +36,14 @@
  		<result property = "item_usage" 		column = "item_usage"/>
  		<result property = "remain_time"			column = "remain_time"/>
  		<result property = "check_flag" 			column = "check_flag"/>
+	</resultMap>
+	
+	<resultMap id="UserEquipItem" type="com.vassystem.dto.UserCharEquipItem" extends="Item">
+ 		<result property = "item_uniqueID" 		column = "item_uniqueID"/>
+ 		<result property = "user_account" 		column = "user_account"/>
+ 		<result property = "char_id" 			column = "char_id"/>
+ 		<result property = "user_char_sn" 		column = "user_char_sn"/>
+ 		<result property = "equip_yn" 			column = "equip_yn"/>
 	</resultMap>
 
 	<select id="buyItem" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
@@ -24,6 +57,33 @@
 			#{inStrParam01, jdbcType = VARCHAR, mode = IN},	<!-- item_id_array -->
 			#{outParam01, 	 jdbcType = INTEGER, mode = OUT},	<!-- result code -->
 	   		#{outStrParam01, jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
+		)
+	}
+	</select>
+	
+	<select id="selectMyItemWithEquip" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="UserEquipItem"> 
+	{ 
+		call abn_getUserItem (
+			#{inParam01, jdbcType = INTEGER, mode = IN},
+			#{inParam02, jdbcType = INTEGER, mode = IN},
+			#{inParam03, jdbcType = INTEGER, mode = IN},
+			#{inParam04, jdbcType = INTEGER, mode = IN},
+			<choose>
+	      		<when test="inParam05 != 0">
+	           		#{inParam05, jdbcType = INTEGER, mode = IN},
+	      		</when>
+	      		<otherwise>
+	            	null,
+	   			</otherwise>
+	   		</choose>
+	   		<choose>
+	      		<when test="inParam06 != 0">
+	           		#{inParam06, jdbcType = INTEGER, mode = IN}
+	      		</when>
+	      		<otherwise>
+	            	null
+	   			</otherwise>
+	   		</choose>
 		)
 	}
 	</select>
