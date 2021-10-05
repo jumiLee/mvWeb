@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.vassystem.dao.UserItemDAO;
+import com.vassystem.packet.UserCharEquipItemPacket;
 import com.vassystem.packet.UserItemBuyPacket;
 
 import common.util.ItemMgmtType;
@@ -42,5 +43,26 @@ public class UserItemServiceImpl implements UserItemService {
 		userItemBuyPacket.setHeader(user_account, resultCd, resultMsg);
 		
 		return userItemBuyPacket;
+	}
+	
+	@Override
+	public UserCharEquipItemPacket getMyItemWithEquip(int job_type, int user_account, int char_id, int user_char_sn, int item_category, int item_type) throws Exception {
+		
+		UserCharEquipItemPacket userCharEquipItemPacket = new UserCharEquipItemPacket();
+		int resultCd = 0;
+		String resultMsg = "";
+		
+		ParamVO vo = new ParamVO(); 
+		vo.setInParam01(job_type); 
+		vo.setInParam02(user_account); 
+		vo.setInParam03(char_id);
+		vo.setInParam04(user_char_sn);
+		vo.setInParam05(item_category);
+		vo.setInParam06(item_type);
+		
+		userCharEquipItemPacket.userCharEquipItemList= userItemDAO.getMyItemWithEquip(vo);;
+		userCharEquipItemPacket.setHeader(user_account, resultCd, resultMsg);
+		
+		return userCharEquipItemPacket;
 	}
 }
