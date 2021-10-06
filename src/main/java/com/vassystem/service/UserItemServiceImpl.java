@@ -20,6 +20,7 @@ public class UserItemServiceImpl implements UserItemService {
 	@Resource(name="UserItemDAO") 
 	private UserItemDAO userItemDAO; 
 
+	//Buy Item
 	@Override
 	public UserItemBuyPacket buyItem(int user_account, int char_id, int user_char_sn, int equip_flag, String item_id_array) throws Exception {
 		
@@ -45,6 +46,7 @@ public class UserItemServiceImpl implements UserItemService {
 		return userItemBuyPacket;
 	}
 	
+	//Get My Inventory
 	@Override
 	public UserCharEquipItemPacket getMyItemWithEquip(int job_type, int user_account, int char_id, int user_char_sn, int item_category, int item_type) throws Exception {
 		
@@ -60,7 +62,38 @@ public class UserItemServiceImpl implements UserItemService {
 		vo.setInParam05(item_category);
 		vo.setInParam06(item_type);
 		
-		userCharEquipItemPacket.userCharEquipItemList= userItemDAO.getMyItemWithEquip(vo);;
+		userCharEquipItemPacket.userCharEquipItemList= userItemDAO.getMyItemWithEquip(vo);
+		userCharEquipItemPacket.setHeader(user_account, resultCd, resultMsg);
+		
+		return userCharEquipItemPacket;
+	}
+	
+	// Equip Item
+	@Override
+	public UserCharEquipItemPacket equipItem(int job_type, int user_account, int char_id, int user_char_sn, int item_id, int item_uniqueID, int item_category, int item_type) throws Exception {
+		
+		UserCharEquipItemPacket userCharEquipItemPacket = new UserCharEquipItemPacket();
+		int resultCd = 0;
+		String resultMsg = "";
+		
+		//Equip Item Process
+		ParamVO vo = new ParamVO(); 
+		vo.setInParam01(job_type); 
+		vo.setInParam02(user_account); 
+		vo.setInParam03(char_id);
+		vo.setInParam04(user_char_sn);
+		vo.setInParam05(item_id);
+		vo.setInParam06(item_uniqueID);
+		
+		userItemDAO.equipItem(vo);
+		
+		resultCd = vo.getOutParam01();
+		resultMsg = vo.getOutStrParam01();
+		
+		if(resultCd == 0) {
+			//Get refreshed Equip Item Data 
+			userCharEquipItemPacket = this.getMyItemWithEquip(1,user_account,char_id, user_char_sn,item_category, item_type );
+		}
 		userCharEquipItemPacket.setHeader(user_account, resultCd, resultMsg);
 		
 		return userCharEquipItemPacket;
