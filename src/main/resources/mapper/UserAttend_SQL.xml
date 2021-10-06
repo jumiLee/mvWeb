@@ -5,17 +5,19 @@
 
 	<resultMap id="userAttend" type="com.vassystem.dto.UserAttend">
  		<result property = "day_no" 		column = "day_no"/>
+ 		<result property = "rwd_type" 		column = "rwd_type"/>
+ 		<result property = "rwd_nm" 		column = "rwd_nm"/>
  		<result property = "rwd_id" 		column = "rwd_id"/>
  		<result property = "rwd_sub_id" 	column = "rwd_sub_id"/>
  		<result property = "rwd_rcv_flag" 	column = "rwd_rcv_flag"/>
- 		<result property = "rwd_nm" 		column = "rwd_nm"/>
+ 		
   	</resultMap>
 
-	<select id="selectUserAttendList" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="userAttend"> 
+	<select id="selectUserAttendList" statementType="CALLABLE" parameterType="int" resultMap ="userAttend"> 
 	{ 
 		call abn_getUserAttendList (
 			1
-			,#{inParam01, jdbcType = INTEGER, mode = IN}
+			,#{user_account}
 			,1
 			,1 <!-- day_no need to modify -->
 		)

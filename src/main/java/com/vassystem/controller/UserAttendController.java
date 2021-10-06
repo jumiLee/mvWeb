@@ -10,10 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.vassystem.dto.UserAttend;
+import com.vassystem.packet.UserAttendPacket;
 import com.vassystem.service.UserAttendService;
 
 @RestController
@@ -28,12 +30,21 @@ public class UserAttendController {
 	@RequestMapping(value="/userAttend.do")
 	public ModelAndView  selectMember(Model model, @RequestParam int user_account) throws Exception {
 		
-		List<UserAttend> userAttendList = attendService.selectUserAttendList(user_account);
+		UserAttendPacket userAttendPacket = attendService.selectUserAttendList(user_account);
+		List<UserAttend> userAttendList = userAttendPacket.userAttendList;
 	
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("userAttendList", userAttendList);
 		
 		return new ModelAndView("user_attend", params);
+	}
+	
+	/* Select item List  */
+	@RequestMapping(value="/selectUserAttend.do", produces = "application/json")
+	@ResponseBody
+	public UserAttendPacket selectUserAttend(@RequestParam int user_account) throws Exception {
+		
+		return attendService.selectUserAttendList(user_account);
 	}
 	
 	@GetMapping("/")

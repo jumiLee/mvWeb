@@ -1,7 +1,5 @@
 package com.vassystem.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -10,13 +8,9 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import common.util.ParamVO;
-import common.util.UserLevelType;
-import com.vassystem.dao.MemberDAO;
 import com.vassystem.dao.UserAttendDAO;
 import com.vassystem.dao.UserInfoDAO;
-import com.vassystem.dto.Member;
-import com.vassystem.dto.UserAttend;
-import com.vassystem.packet.MemberInfoPacket;
+import com.vassystem.packet.UserAttendPacket;
 
 @Service 
 public class UserAttendServiceImpl implements UserAttendService {
@@ -30,12 +24,12 @@ public class UserAttendServiceImpl implements UserAttendService {
 	private UserInfoDAO userInfoDAO; 
 
 	@Override
-	public List<UserAttend> selectUserAttendList(int user_account) throws Exception {
-		///Setting parameters
-		ParamVO vo = new ParamVO(); 
-		vo.setInParam01(user_account); 
+	public UserAttendPacket selectUserAttendList(int user_account) throws Exception {
 		
-		return userAttendDAO.selectUserAttendList(vo);
+		UserAttendPacket userAttendPacket = new UserAttendPacket();
+		userAttendPacket.userAttendList = userAttendDAO.selectUserAttendList(user_account);
+		
+		return userAttendPacket;
 	}
 	
 	/**
@@ -55,6 +49,7 @@ public class UserAttendServiceImpl implements UserAttendService {
 	/**
 	 * get sessionId
 	 */
+	@SuppressWarnings("unused")
 	private String genSessionId(int user_account) {
 		
 		if(user_account == 0) {
