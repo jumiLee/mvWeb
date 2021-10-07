@@ -12,6 +12,7 @@ import common.util.UserLevelType;
 
 import com.vassystem.dto.Member;
 import com.vassystem.packet.MemberInfoPacket;
+import com.vassystem.packet.MemberInitialInfoPacket;
 import com.vassystem.service.MemberService;
 
 
@@ -60,6 +61,14 @@ public class MemberController {
 		//ch_id 
 		String ch_id = "";
 		return memberService.register(UserLevelType.GENERAL, email, pwd, nickname, ch_type, ch_id);
+	}
+	
+	/* Get Member Initial Info After Log in */
+	@RequestMapping(value="/getUserInitialInfo.do", produces = "application/json")
+	@ResponseBody
+	public MemberInitialInfoPacket getUserInitialInfo(@RequestParam int user_account ) throws Exception {
+		
+		return memberService.getUserInitialInfo(user_account);
 	}
 	
 	/* AI(test) register */

@@ -11,7 +11,6 @@ import org.springframework.util.CollectionUtils;
 import com.vassystem.dao.CharacterDAO;
 import com.vassystem.dto.UserCharacter;
 import com.vassystem.packet.CharacterPacket;
-import com.vassystem.packet.MemberInfoPacket;
 
 @Service 
 public class CharacterServiceImpl implements CharacterService {
@@ -39,5 +38,17 @@ public class CharacterServiceImpl implements CharacterService {
 		characterPacket.setHeader(user_account, resultCd, resultMsg);
 		
 		return characterPacket;
+	}
+	
+	/*select Carry Character List */
+	@Override
+	public UserCharacter selectCarryCharacter(int user_account) throws Exception{
+	
+		List<UserCharacter> userCharacterList = selectCharacterList(user_account).userCharacterList;
+		
+		return userCharacterList.stream()
+				.filter(s -> s.carry_flag == 1)
+				.findAny()
+				.orElse(null);
 	}
 }

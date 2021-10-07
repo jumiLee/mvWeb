@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import common.util.ParamVO;
@@ -13,6 +14,7 @@ import com.vassystem.dao.MemberDAO;
 import com.vassystem.dao.UserInfoDAO;
 import com.vassystem.dto.Member;
 import com.vassystem.packet.MemberInfoPacket;
+import com.vassystem.packet.MemberInitialInfoPacket;
 
 @Service 
 public class MemberServiceImpl implements MemberService {
@@ -25,6 +27,9 @@ public class MemberServiceImpl implements MemberService {
 	@Resource(name="UserInfoDAO") 
 	private UserInfoDAO userInfoDAO; 
 	
+	
+	@Autowired
+	CharacterService characterService;
 	
 	@Override
 	public Member selectMember(String email, String pwd) throws Exception {
@@ -118,6 +123,20 @@ public class MemberServiceImpl implements MemberService {
 		loginCheckPacket.setHeader(user_account, resultCd, resultMsg);
 		
 		return loginCheckPacket;
+	}
+	
+	
+	/* Set and Get initial user information */
+	@Override
+	public MemberInitialInfoPacket getUserInitialInfo(int user_account) throws Exception {
+		MemberInitialInfoPacket memberInitialInfoPacket = new MemberInitialInfoPacket();
+		
+		//Set  notice and attend flag info
+		memberInitialInfoPacket = userInfoDAO.selectUserInitialInfo(user_account);
+		//Set Character Info
+		memberInitialInfoPacket.carryUserCharacter = characterService.selectCarryCharacter(user_account);
+		
+		return memberInitialInfoPacket;
 	}
 	
 	/**

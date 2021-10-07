@@ -11,6 +11,14 @@
  		<result property = "point" 		column = "user_point"/> 
 	</resultMap>
 	
+	<resultMap id="userInitialInfo" type="com.vassystem.packet.MemberInitialInfoPacket">
+		<result property = "new_msg_flag" 		column = "new_msg_flag"/>
+ 		<result property = "new_item_flag" 		column = "new_item_flag"/> 	
+ 		<result property = "new_achv_flag" 		column = "new_achv_flag"/> 	
+ 		<result property = "new_frd_flag" 		column = "new_frd_flag"/> 
+ 		<result property = "attend_show_flag"	column = "attend_show_flag"/> 
+	</resultMap>
+	
 	<resultMap id="userNotice" type="com.vassystem.dto.UserNotice"> 		
  		<result property = "monsterNewFlag" column = "mon_new"/>
 	</resultMap>
@@ -23,6 +31,14 @@
 	}
 	</select>
 
+	<select id="selectUserInitialInfo" statementType="CALLABLE" parameterType="int" resultMap ="userInitialInfo"> 
+	{ 
+		call abn_getUserInitialInfo (
+			#{user_account, jdbcType = INTEGER, mode = IN}
+		)
+	}
+	</select>
+	
 	<select id="selectUserNotice" statementType="CALLABLE" parameterType="int" resultMap ="userNotice"> 
 	{ 
 		call abn_getNoticeInfo (
