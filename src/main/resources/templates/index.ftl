@@ -13,6 +13,7 @@
 	[공통] <br>
 	<a href="./selectUserAttend.do?user_account=${user_account}" target="_blank">출석조회 (unity) </a> <br>
 	<a href="./userAttend.do?user_account=${user_account}" target="_blank">출석조회 (web) </a> <br>
+	<a href="./registerUserAttend.do?user_account=${user_account}" target="_blank">출석등록</a> <br>
 	
 	<a href="./register.do?email=1234&pwd=1234&nickname=1234" target="_blank">사용자 생성</a> <br>
 	<a href="./loginChk.do?email=&pwd=" target="_blank">로그인 체크</a> <br>

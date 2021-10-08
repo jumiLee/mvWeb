@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vassystem.dao.UserItemDAO;
 import com.vassystem.packet.UserCharEquipItemPacket;
-import com.vassystem.packet.UserItemBuyPacket;
+import com.vassystem.packet.ResultPacket;
 
 import common.util.ItemMgmtType;
 import common.util.ParamVO;
@@ -22,9 +22,9 @@ public class UserItemServiceImpl implements UserItemService {
 
 	//Buy Item
 	@Override
-	public UserItemBuyPacket buyItem(int user_account, int char_id, int user_char_sn, int equip_flag, String item_id_array) throws Exception {
+	public ResultPacket buyItem(int user_account, int char_id, int user_char_sn, int equip_flag, String item_id_array) throws Exception {
 		
-		UserItemBuyPacket userItemBuyPacket = new UserItemBuyPacket();
+		ResultPacket userItemBuyPacket = new ResultPacket();
 		int resultCd = 0;
 		String resultMsg = "";
 		

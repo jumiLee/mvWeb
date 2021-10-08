@@ -31,6 +31,9 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	CharacterService characterService;
 	
+	@Autowired
+	UserAttendService userAttendService;
+	
 	@Override
 	public Member selectMember(String email, String pwd) throws Exception {
 		///Setting parameters
@@ -73,6 +76,11 @@ public class MemberServiceImpl implements MemberService {
 			resultCd = -11;
 			resultMsg = "No member exist";
 		}		
+		
+		//login success -> register Attend
+		if(resultCd ==0) {
+			userAttendService.registerUserAttend(user_account);
+		}
 		loginCheckPacket.setHeader(user_account, resultCd, resultMsg);
 				
 		return loginCheckPacket;

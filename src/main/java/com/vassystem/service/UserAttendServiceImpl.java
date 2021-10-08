@@ -7,9 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import common.util.AttendType;
 import common.util.ParamVO;
 import com.vassystem.dao.UserAttendDAO;
 import com.vassystem.dao.UserInfoDAO;
+import com.vassystem.packet.ResultPacket;
 import com.vassystem.packet.UserAttendPacket;
 
 @Service 
@@ -30,6 +32,30 @@ public class UserAttendServiceImpl implements UserAttendService {
 		userAttendPacket.userAttendList = userAttendDAO.selectUserAttendList(user_account);
 		
 		return userAttendPacket;
+	}
+	
+	
+	@Override
+	public ResultPacket registerUserAttend(int user_account) throws Exception{
+		
+		ResultPacket resultPacket = new ResultPacket();
+		int resultCd = 0;
+		String resultMsg = "";
+		
+		ParamVO vo = new ParamVO(); 
+		vo.setInParam01(1); 							//job_code
+		vo.setInParam02(user_account); 					//user_account
+		vo.setInParam03(AttendType.DAILY.getCode());	//attend_type
+		vo.setInParam04(0);								//day_no
+		
+		userAttendDAO.registerUserAttend(vo);
+		
+		resultCd = vo.getOutParam01();
+		resultMsg = vo.getOutStrParam01();
+		
+		resultPacket.setHeader(user_account, resultCd, resultMsg);
+		
+		return resultPacket;
 	}
 	
 	/**

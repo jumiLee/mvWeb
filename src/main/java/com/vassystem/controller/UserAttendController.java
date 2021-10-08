@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.vassystem.dto.UserAttend;
+import com.vassystem.packet.ResultPacket;
 import com.vassystem.packet.UserAttendPacket;
 import com.vassystem.service.UserAttendService;
 
@@ -26,7 +27,7 @@ public class UserAttendController {
 	@Autowired 
 	private UserAttendService attendService;
 	
-	/* attend list Select */
+	/* attend list for web */
 	@RequestMapping(value="/userAttend.do")
 	public ModelAndView  selectMember(Model model, @RequestParam int user_account) throws Exception {
 		
@@ -39,12 +40,20 @@ public class UserAttendController {
 		return new ModelAndView("user_attend", params);
 	}
 	
-	/* Select item List  */
+	/* attend List for unity  */
 	@RequestMapping(value="/selectUserAttend.do", produces = "application/json")
 	@ResponseBody
 	public UserAttendPacket selectUserAttend(@RequestParam int user_account) throws Exception {
 		
 		return attendService.selectUserAttendList(user_account);
+	}
+	
+	/* attend Register */
+	@RequestMapping(value="/registerUserAttend.do", produces = "application/json")
+	@ResponseBody
+	public ResultPacket registerUserAttend(@RequestParam int user_account) throws Exception {
+		
+		return attendService.registerUserAttend(user_account);
 	}
 	
 	@GetMapping("/")

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vassystem.packet.UserCharEquipItemPacket;
-import com.vassystem.packet.UserItemBuyPacket;
+import com.vassystem.packet.ResultPacket;
 import com.vassystem.service.UserItemService;
 
 
@@ -23,7 +23,7 @@ public class UserItemController {
 	/* Buy Item */
 	@RequestMapping(value="/buyAndEquipItem.do", produces = "application/json")
 	@ResponseBody
-	public UserItemBuyPacket buyAndEquipItem(@RequestParam int user_account, 
+	public ResultPacket buyAndEquipItem(@RequestParam int user_account, 
 									 @RequestParam int char_id,
 									 @RequestParam int user_char_sn,
 									 @RequestParam String item_id_array) throws Exception {
