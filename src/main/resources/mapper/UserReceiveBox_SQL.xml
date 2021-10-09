@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="userReceiveBox"> 
+
+
+	<resultMap id="UserReceiveBox" type="com.vassystem.dto.UserReceiveBox">
+ 		<result property = "user_account" 		column = "user_account"/>
+ 		<result property = "receive_sn" 		column = "receive_sn"/>
+ 		<result property = "sender_account" 	column = "sender_account"/>
+ 		<result property = "sender_nickname" 	column = "sender_nickname"/>
+ 		<result property = "rwd_type"			column = "rwd_type"/>
+ 		<result property = "rwd_id" 			column = "rwd_id"/>
+ 		<result property = "rwd_sub_id" 		column = "rwd_sub_id"/>
+ 		<result property = "rwd_nm" 			column = "rwd_nm"/>
+ 		<result property = "issue_dt" 			column = "issue_dt"/>
+ 		<result property = "receive_msg" 		column = "receive_msg"/>
+ 		<result property = "check_dt" 			column = "check_dt"/>
+ 		<result property = "check_flag" 		column = "check_flag"/>
+	</resultMap>
+	
+	<select id="selectReceiveBoxList" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="UserReceiveBox"> 
+	{ 
+		call abn_getMsgList (
+			#{inParam01, jdbcType = INTEGER, mode = IN}, <!-- job_code -->
+			#{inParam02, jdbcType = INTEGER, mode = IN}	 <!-- user_account -->
+		)
+	}
+	</select>
+	
+	<select id="mgmtReceiveBox" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
+	{ 
+		call abn_mgmtReceiveBox (
+			#{inParam01, 	jdbcType = INTEGER,  mode = IN},	<!-- job_code -->
+			#{inParam02, 	jdbcType = INTEGER,  mode = IN},	<!-- user_account -->
+			#{inParam03, 	jdbcType = INTEGER,  mode = IN},	<!-- receive_sn -->
+			#{inParam04, 	jdbcType = INTEGER,  mode = IN},	<!-- sender_account -->
+			#{inParam05, 	jdbcType = INTEGER,  mode = IN},	<!-- rwd_type -->
+			#{inParam06, 	jdbcType = INTEGER,  mode = IN},	<!-- rwd_id -->
+			#{inParam07, 	jdbcType = INTEGER,  mode = IN},	<!-- rwd_sub_id -->
+			#{inStrParam01,	jdbcType = VARCHAR,  mode = IN},	<!-- receive_msg -->
+			#{outParam01, 	 jdbcType = INTEGER, mode = OUT},	<!-- result code -->
+	   		#{outStrParam01, jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
+		)
+	}
+	</select>
+</mapper>
