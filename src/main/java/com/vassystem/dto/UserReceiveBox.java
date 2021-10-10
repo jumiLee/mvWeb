@@ -17,7 +17,7 @@ public class UserReceiveBox {
 	public Date issue_dt;
 	public String receive_msg;
 	public Date check_dt;
-	public int check_flag;
+	public String check_flag;
 	public String sender_nickname;
 	public String rwd_nm;
 }

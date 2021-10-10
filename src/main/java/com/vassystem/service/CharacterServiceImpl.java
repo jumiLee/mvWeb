@@ -47,7 +47,7 @@ public class CharacterServiceImpl implements CharacterService {
 		List<UserCharacter> userCharacterList = selectCharacterList(user_account).userCharacterList;
 		
 		return userCharacterList.stream()
-				.filter(s -> s.carry_flag == 1)
+				.filter(s -> s.carry_flag.equals("Y"))
 				.findAny()
 				.orElse(null);
 	}

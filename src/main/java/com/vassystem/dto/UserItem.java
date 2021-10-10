@@ -10,7 +10,7 @@ public class UserItem extends Item {
 	public int user_account;
 	public int item_id;
 	public int item_cnt;
-	public int item_usage;
+	public String item_usage;
 	public int remain_time;
-	public int check_flag;
+	public String check_flag;
 }

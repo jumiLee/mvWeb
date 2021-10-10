@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class UserAttend extends Attend{
 	
-	public int rwd_rcv_flag;
+	public String rwd_rcv_flag;
 }
