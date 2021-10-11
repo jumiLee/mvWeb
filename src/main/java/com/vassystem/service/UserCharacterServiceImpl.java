@@ -12,8 +12,10 @@ import com.vassystem.dao.CharacterDAO;
 import com.vassystem.dto.UserCharacter;
 import com.vassystem.packet.CharacterPacket;
 
+import common.util.ParamVO;
+
 @Service 
-public class CharacterServiceImpl implements CharacterService {
+public class UserCharacterServiceImpl implements UserCharacterService {
 
 	Logger log = Logger.getLogger(this.getClass());
 	
@@ -35,6 +37,10 @@ public class CharacterServiceImpl implements CharacterService {
 		}
 		
 		characterPacket.userCharacterList = userCharacterList;
+		characterPacket.carryUserCharacter = userCharacterList.stream()
+														.filter(s -> s.carry_flag.equals("Y"))
+														.findAny()
+														.orElse(null);
 		characterPacket.setHeader(user_account, resultCd, resultMsg);
 		
 		return characterPacket;
@@ -51,4 +57,33 @@ public class CharacterServiceImpl implements CharacterService {
 				.findAny()
 				.orElse(null);
 	}
+	
+	//update User Character 
+	@Override
+	public CharacterPacket modifyUserCharacter(int job_code, int user_account, int char_id, int user_char_sn, String char_cust_info) throws Exception {
+			
+		CharacterPacket characterPacket = new CharacterPacket();
+		int resultCd = 0;
+		String resultMsg = "";
+			
+		ParamVO vo = new ParamVO(); 			
+		vo.setInParam01(job_code); 
+		vo.setInParam02(user_account); 
+		vo.setInParam03(char_id);
+		vo.setInParam04(user_char_sn);
+		vo.setInStrParam01(char_cust_info);
+			
+		characterDAO.modifyUserCharacter(vo);
+			
+		resultCd = vo.getOutParam01();
+		resultMsg = vo.getOutStrParam01();
+			
+		if(resultCd == 0) {
+			characterPacket.carryUserCharacter = selectCarryCharacter(user_account);
+		}
+		characterPacket.setHeader(user_account, resultCd, resultMsg);
+			
+		return characterPacket;
+	}
+	
 }

@@ -10,7 +10,7 @@
  		<result property = "user_char_lv" 	column = "user_char_lv"/>
  		<result property = "user_char_exp" 	column = "user_char_exp"/>
  		<result property = "carry_flag" 	column = "carry_flag"/>
- 		<result property = "char_cust_info"	column = "char_cust_info"/>
+ 		<result property = "char_cust_info"	column = "char_cust_info" javaType="com.vassystem.dto.CharacterCustInfo" typeHandler="common.util.JsonTypeHandler"/>
  		<result property = "create_dt" 		column = "create_dt"/>
  		<result property = "char_nm" 		column = "char_nm"/>
  		<result property = "char_type" 		column = "char_type"/>
@@ -23,6 +23,20 @@
 			,#{user_account, jdbcType = INTEGER, mode = IN}
 			,null
 			,null
+		)
+	}
+	</select>
+	
+	<select id="modifyUserCharacter" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
+	{ 
+		call abn_MgmtUserCharacter (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},	<!-- job_code -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam03, 	jdbcType = INTEGER, mode = IN},	<!-- char_id -->
+			#{inParam04, 	jdbcType = INTEGER, mode = IN},	<!-- user_char_sn -->
+			#{inStrParam01,	jdbcType = VARCHAR, mode = IN},	<!-- char_cust_info(json) -->
+			#{outParam01,  	jdbcType = INTEGER, mode = OUT},<!-- result code -->
+	   		#{outStrParam01,jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
 		)
 	}
 	</select>

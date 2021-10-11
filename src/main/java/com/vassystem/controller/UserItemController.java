@@ -28,7 +28,7 @@ public class UserItemController {
 									 @RequestParam int user_char_sn,
 									 @RequestParam String item_id_array) throws Exception {
 		
-		return userItemService.buyItem(user_account, char_id, user_char_sn, 1, item_id_array);
+		return userItemService.buyItem(user_account, char_id, user_char_sn, "Y", item_id_array);
 	}
 	
 	/* Search My Item */

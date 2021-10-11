@@ -22,7 +22,7 @@ public class UserItemServiceImpl implements UserItemService {
 
 	//Buy Item
 	@Override
-	public ResultPacket buyItem(int user_account, int char_id, int user_char_sn, int equip_flag, String item_id_array) throws Exception {
+	public ResultPacket buyItem(int user_account, int char_id, int user_char_sn, String equip_flag, String item_id_array) throws Exception {
 		
 		ResultPacket userItemBuyPacket = new ResultPacket();
 		int resultCd = 0;
@@ -33,8 +33,8 @@ public class UserItemServiceImpl implements UserItemService {
 		vo.setInParam02(user_account); 
 		vo.setInParam03(char_id);
 		vo.setInParam04(user_char_sn);
-		vo.setInParam05(equip_flag);
-		vo.setInStrParam01(item_id_array);
+		vo.setInStrParam01(equip_flag);
+		vo.setInStrParam02(item_id_array);
 		
 		userItemDAO.buyItem(vo);
 		

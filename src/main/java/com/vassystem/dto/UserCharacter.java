@@ -13,7 +13,8 @@ public class UserCharacter extends Character {
 	public int user_char_lv;
 	public int user_char_exp;
 	public String carry_flag;
-	public String char_cust_info;
+	//public String char_cust_info;
+	public CharacterCustInfo char_cust_info;
 	public Date create_dt;
 	public Date last_mod_dt;
 }

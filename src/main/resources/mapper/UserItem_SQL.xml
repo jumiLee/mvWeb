@@ -53,10 +53,10 @@
 			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
 			#{inParam03, 	jdbcType = INTEGER, mode = IN},	<!-- char_id -->
 			#{inParam04, 	jdbcType = INTEGER, mode = IN},	<!-- user_char_sn -->
-			#{inParam05, 	jdbcType = INTEGER, mode = IN},	<!-- equip_flag -->
-			#{inStrParam01, jdbcType = VARCHAR, mode = IN},	<!-- item_id_array -->
-			#{outParam01, 	 jdbcType = INTEGER, mode = OUT},	<!-- result code -->
-	   		#{outStrParam01, jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
+			#{inStrParam01,	jdbcType = VARCHAR, mode = IN},	<!-- equip_flag -->
+			#{inStrParam02,	jdbcType = VARCHAR, mode = IN},	<!-- item_id_array -->
+			#{outParam01,  	jdbcType = INTEGER, mode = OUT},<!-- result code -->
+	   		#{outStrParam01,jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
 		)
 	}
 	</select>

@@ -18,15 +18,15 @@ public class Item {
 	public int item_value;
 	public int item_cnt;
 	public int rare_degree;
-	public int item_period_flag;
+	public String item_period_flag;
 	public int item_period;
-	public int item_dup_flag;
-	public int item_new_flag;
+	public String item_dup_flag;
+	public String item_new_flag;
 	public int item_order;
 	public int item_img_no;
-	public int item_equip_flag;
+	public String item_equip_flag;
 	public int item_grade;
-	public int use_flag;
+	public String use_flag;
 	public Date create_dt;
 	public Date del_dt;
 }

@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	@Autowired
-	CharacterService characterService;
+	UserCharacterService characterService;
 	
 	@Autowired
 	UserAttendService userAttendService;
