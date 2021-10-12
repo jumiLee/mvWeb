@@ -34,7 +34,7 @@
 			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
 			#{inParam03, 	jdbcType = INTEGER, mode = IN},	<!-- char_id -->
 			#{inParam04, 	jdbcType = INTEGER, mode = IN},	<!-- user_char_sn -->
-			#{inStrParam01,	jdbcType = VARCHAR, mode = IN},	<!-- char_cust_info(json) -->
+			#{inObjParam01,	javaType = com.vassystem.dto.CharacterCustInfo, typeHandler=common.util.JsonTypeHandler, mode = IN},	<!-- char_cust_info(json) -->
 			#{outParam01,  	jdbcType = INTEGER, mode = OUT},<!-- result code -->
 	   		#{outStrParam01,jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
 		)

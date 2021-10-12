@@ -21,6 +21,7 @@
 	
 	
 	<a href="./selectCharacterList.do?user_account=${user_account}" target="_blank">캐릭터 조회</a> <br>
+	<a href="./modifyUserCharacter.do?user_account=${user_account}&char_id=&user_char_sn=&char_cust_info=" target="_blank">캐릭터 정보 수정 </a> <br>
 	
 	<a href="./selectItemLisByCategory.do?user_account=${user_account}&item_category=10" target="_blank">상점 아이템 조회</a> <br>
 	<a href="./buyAndEquipItem.do?user_account=${user_account}&item_id=&char_id=&user_char_sn=&item_id_array=" target="_blank">상점 아이템 구매 </a> <br>

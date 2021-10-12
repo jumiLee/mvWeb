@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vassystem.dto.CharacterCustInfo;
 import com.vassystem.packet.CharacterPacket;
 import com.vassystem.service.UserCharacterService;
 
@@ -29,10 +32,14 @@ public class UserCharacterController {
 	/* update character info */
 	@RequestMapping(value="/modifyUserCharacter.do", produces = "application/json")
 	@ResponseBody
-	public CharacterPacket modifyUserCharacter(@RequestParam int user_account, 
-									 		@RequestParam int char_id,
-									 		@RequestParam int user_char_sn,
-									 		@RequestParam String char_cust_info) throws Exception {
+	public CharacterPacket modifyUserCharacter(	@RequestParam int user_account, 
+									 			@RequestParam int char_id,
+									 			@RequestParam int user_char_sn,
+									 			@RequestParam String char_cust_info_json) throws Exception {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		CharacterCustInfo char_cust_info = objectMapper.readValue(char_cust_info_json, CharacterCustInfo.class);
 		
 		return characterService.modifyUserCharacter(1, user_account, char_id, user_char_sn, char_cust_info);
 	}

@@ -20,8 +20,12 @@ public class ParamVO {
 	public String inStrParam03;
 	public String inStrParam04;
 	
+	public Object inObjParam01;
+	
 	public int outParam01; 
 	public int outParam02; 
 	
 	public String outStrParam01;
+	
+	
 }

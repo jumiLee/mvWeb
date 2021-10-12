@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.vassystem.dao.CharacterDAO;
+import com.vassystem.dto.CharacterCustInfo;
 import com.vassystem.dto.UserCharacter;
 import com.vassystem.packet.CharacterPacket;
 
@@ -60,7 +61,7 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 	
 	//update User Character 
 	@Override
-	public CharacterPacket modifyUserCharacter(int job_code, int user_account, int char_id, int user_char_sn, String char_cust_info) throws Exception {
+	public CharacterPacket modifyUserCharacter(int job_code, int user_account, int char_id, int user_char_sn, CharacterCustInfo char_cust_info) throws Exception {
 			
 		CharacterPacket characterPacket = new CharacterPacket();
 		int resultCd = 0;
@@ -71,7 +72,7 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 		vo.setInParam02(user_account); 
 		vo.setInParam03(char_id);
 		vo.setInParam04(user_char_sn);
-		vo.setInStrParam01(char_cust_info);
+		vo.setInObjParam01(char_cust_info);
 			
 		characterDAO.modifyUserCharacter(vo);
 			
