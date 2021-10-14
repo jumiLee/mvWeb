@@ -9,7 +9,6 @@ public enum NewType {
 	INVENTORY(2,"inventory"),
 	ACHIEVEMENT(3,"Achievement"),
 	FRIEND(4,"New Friend");
-	
 		
 	private final int code;
 	private final String value;
