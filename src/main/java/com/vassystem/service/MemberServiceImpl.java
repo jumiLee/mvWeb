@@ -120,10 +120,10 @@ public class MemberServiceImpl implements MemberService {
 		//set return message
 			switch(resultCd) {
 			case -11:
-				resultMsg = "사용중인 이메일";
+				resultMsg = "사용중인 이메일입니다";
 				break;
 			case -12:
-				resultMsg = "사용중인 닉네임";
+				resultMsg = "사용중인 닉네임입니다.";
 				break;
 			}
 		}

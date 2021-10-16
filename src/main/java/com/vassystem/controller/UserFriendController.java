@@ -1,9 +1,5 @@
 package com.vassystem.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vassystem.dto.UserFriend;
 import com.vassystem.packet.UserFriendPacket;
 import com.vassystem.service.UserFriendService;
 
@@ -25,6 +20,15 @@ public class UserFriendController {
 	@Autowired 
 	private UserFriendService userFriendService;
 	
+	//친구관리  
+	@RequestMapping(value="/mgmtFriend.do", produces = "application/json")
+	@ResponseBody
+	public UserFriendPacket mgmtFriend(	@RequestParam int job_code, 
+										@RequestParam int user_account, 
+										@RequestParam int frd_account ) throws Exception {
+		return userFriendService.mgmtFriend(job_code, user_account, frd_account);
+	}
+		
 	// 친구신청 
 	@RequestMapping(value="/requestFriend.do", produces = "application/json")
 	@ResponseBody
