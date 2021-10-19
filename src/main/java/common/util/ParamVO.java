@@ -26,6 +26,8 @@ public class ParamVO {
 	public int outParam02; 
 	
 	public String outStrParam01;
+	public String outStrParam02;
+	public String outStrParam03;
 	
 	
 }

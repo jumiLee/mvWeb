@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.vassystem.dao.CashDAO;
 import com.vassystem.dto.Cash;
 import com.vassystem.packet.CashPacket;
+
 import common.util.ParamVO;
 
 @Service 
@@ -42,5 +43,24 @@ public class CashServiceImpl implements CashService {
 		cashPacket.setHeader(user_account, resultCd, resultMsg);
 		
 		return cashPacket;
+	}
+	
+	@Override
+	public int mgmtCash(int job_code, int user_account, int frd_account, int cash_id, int payment_type) throws Exception{
+		
+		int resultCd = 0;
+		
+		ParamVO vo = new ParamVO(); 
+		vo.setInParam01(job_code); 
+		vo.setInParam02(user_account); 
+		vo.setInParam03(frd_account); 
+		vo.setInParam04(cash_id); 
+		vo.setInParam05(payment_type); 
+		
+		cashDAO.mgmtCash(vo);
+		
+		resultCd 	= vo.getOutParam01();
+		
+		return resultCd;
 	}
 }

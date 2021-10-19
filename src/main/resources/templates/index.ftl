@@ -36,7 +36,10 @@
 	
 	<a href="./geMyFriendList.do?user_account=${user_account}" target="_blank">친구 리스트 조회 </a> <br>
 	
-		<a href="./selectCashList.do?user_account=${user_account}&device_type=1&payment_type=1" target="_blank">Cash 리스트 조회 </a> <br>
+	<a href="./selectCashList.do?user_account=${user_account}&device_type=1&payment_type=1" target="_blank">Cash 리스트 조회 </a> <br>
+	
+	<a href="./requestPayment.do?user_account=${user_account}&&cash_id=1&device_type=1&payment_type=1" target="_blank">결제요청  </a> <br>
+	<a href="./updatePayment.do?user_account=${user_account}&&cash_id=1&trade_no=5&order_no=5&trade_res_cd=0&trade_res_msg=sucess&trade_res_key=5ONLYGODWILLMAKEAWAY" target="_blank">결제결과 업데이트 </a> <br>
 	<!-- 
 	<a href="./user_main.jsp?user_account=${user_account}" target="_blank">Main</a> <br>
 	<a href="./ma_error.jsp" target="_blank">Error page</a> <br>

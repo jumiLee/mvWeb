@@ -28,4 +28,17 @@
 		)
 	}
 	</select>
+	
+	<select id="abn_MgmtCash" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
+	{ 
+		call abn_MgmtCash (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},	<!-- job_code -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam03,	jdbcType = INTEGER, mode = IN},	<!-- frd_account -->
+			#{inParam04,	jdbcType = INTEGER, mode = IN},	<!-- cash_id -->
+			#{inParam05,	jdbcType = INTEGER, mode = IN},	<!-- payment_type -->
+			#{outParam01,  	jdbcType = INTEGER, mode = OUT} <!-- result-->
+		)
+	}
+	</select>
 </mapper>

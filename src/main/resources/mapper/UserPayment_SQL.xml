@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="userPayment"> 
+	
+	<resultMap id="UserPayment" type="com.vassystem.dto.UserPayment">
+ 		<result property = "user_account"	column = "user_account"/>
+ 		<result property = "trade_no" 		column = "trade_no"/>
+ 		<result property = "prod_id" 		column = "prod_id"/>
+ 		<result property = "trade_amt" 		column = "trade_amt"/>
+ 		<result property = "trade_req_dt"	column = "trade_req_dt"/>
+ 		<result property = "trade_key"		column = "trade_key"/>
+ 		<result property = "trade_res_cd" 	column = "trade_res_cd"/>
+ 		<result property = "trade_res_mgs" 	column = "trade_res_mgs"/>
+ 		<result property = "trade_res_dt" 	column = "trade_res_dt"/>
+ 		<result property = "trade_res_key" 	column = "trade_res_key"/>
+ 		<result property = "order_info" 	column = "order_info"/>
+ 		<result property = "device_type" 	column = "device_type"/>
+ 		<result property = "payment_type" 	column = "payment_type"/>
+ 		<result property = "ch_type" 		column = "ch_type"/>
+ 		<result property = "ch_id" 			column = "ch_id"/>
+ 		<result property = "req_time_diff" 	column = "req_time_diff"/>
+ 		<result property = "accept_itval" 	column = "accept_itval"/>
+	</resultMap>
+	
+	<select id="requestPayment" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
+	{ 
+		call abn_ReqPayment (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- cash_id -->
+			#{inParam03,	jdbcType = INTEGER, mode = IN},	<!-- device_type -->
+			#{inParam04,	jdbcType = INTEGER, mode = IN},	<!-- payment_type -->
+			#{outParam01,  	jdbcType = INTEGER, mode = OUT},<!-- result code -->
+	   		#{outStrParam01,jdbcType = VARCHAR, mode = OUT},<!-- result message -->
+	   		#{outParam02,  	jdbcType = INTEGER, mode = OUT},<!-- trade_no -->
+	   		#{outStrParam02,jdbcType = VARCHAR, mode = OUT},<!-- server_key -->
+	   		#{outStrParam03,jdbcType = VARCHAR, mode = OUT} <!-- app_id -->
+		)
+	}
+	</select>
+	
+	<select id="updatePayment" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
+	{ 
+		call abn_MgmtPayment (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},<!-- job_code -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},<!-- user_account -->
+			#{inParam03, 	jdbcType = INTEGER, mode = IN},<!-- trade_no -->
+			#{inStrParam01, jdbcType = VARCHAR, mode = IN},<!-- order_no -->
+			#{inStrParam02, jdbcType = VARCHAR, mode = IN},<!-- trade_key -->
+			#{inParam04, 	jdbcType = INTEGER, mode = IN},<!-- trade_res_cd -->
+			#{inStrParam03, jdbcType = VARCHAR, mode = IN}, <!-- trade_res_msg -->
+			#{inStrParam04, jdbcType = VARCHAR, mode = IN}, <!-- trade_res_key -->
+			#{outParam01,  	jdbcType = INTEGER, mode = OUT},<!-- result code -->
+	   		#{outStrParam01,jdbcType = VARCHAR, mode = OUT} <!-- result message -->
+		)
+	}
+	</select>
+	
+	<select id="selectUserPayment" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="UserPayment"> 
+	{ 
+		call abn_getUserPayment (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},<!-- user_account -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN} <!-- trade_no -->
+		)
+	}
+	</select>
+</mapper>

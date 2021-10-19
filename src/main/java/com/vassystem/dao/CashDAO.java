@@ -14,4 +14,8 @@ public class CashDAO extends AbstractDAO {
 	public List<Cash> selectCashList(ParamVO paramVO) throws Exception{ 
 		return selectList("cash.selectCashList", paramVO); 
 	}
+	
+	public Object mgmtCash(ParamVO paramVO) throws Exception{ 
+		return selectOne("cash.abn_MgmtCash", paramVO); 
+	}
 }
