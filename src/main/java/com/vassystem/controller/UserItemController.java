@@ -20,7 +20,7 @@ public class UserItemController {
 	@Autowired 
 	private UserItemService userItemService;
 	
-	/* Buy Item */
+	/* Buy and Equip Item */
 	@RequestMapping(value="/buyAndEquipItem.do", produces = "application/json")
 	@ResponseBody
 	public ResultPacket buyAndEquipItem(@RequestParam int user_account, 
@@ -29,6 +29,15 @@ public class UserItemController {
 									 @RequestParam String item_id_array) throws Exception {
 		
 		return userItemService.buyItem(user_account, char_id, user_char_sn, "Y", item_id_array);
+	}
+	
+	/* Buy Item */
+	@RequestMapping(value="/buyItem.do", produces = "application/json")
+	@ResponseBody
+	public ResultPacket buyItem(@RequestParam int user_account, 
+								@RequestParam String item_id_array) throws Exception {
+		
+		return userItemService.buyItem(user_account, 0, 0, "N", item_id_array);
 	}
 	
 	/* Search My Item */

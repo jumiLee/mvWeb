@@ -15,6 +15,7 @@ import com.vassystem.dao.UserInfoDAO;
 import com.vassystem.dto.Member;
 import com.vassystem.packet.MemberInfoPacket;
 import com.vassystem.packet.MemberInitialInfoPacket;
+import com.vassystem.packet.ResultPacket;
 
 @Service 
 public class MemberServiceImpl implements MemberService {
@@ -47,9 +48,9 @@ public class MemberServiceImpl implements MemberService {
 	 * login check
 	 */
 	@Override
-	public MemberInfoPacket loginCheck(String email, String pwd) throws Exception {
+	public ResultPacket loginCheck(String email, String pwd) throws Exception {
 		
-		MemberInfoPacket loginCheckPacket = new MemberInfoPacket();
+		ResultPacket resultPacket = new ResultPacket();
 		Member member = new Member();
 		int resultCd = 0;
 		String resultMsg = "";
@@ -69,8 +70,8 @@ public class MemberServiceImpl implements MemberService {
 				resultMsg = "wrong password";
 			}else {
 				user_account = member.account;			
-				loginCheckPacket.userDetail = userInfoDAO.selectUserDetail(user_account);
-				loginCheckPacket.sid = genSessionId(user_account);
+				//loginCheckPacket.userDetail = userInfoDAO.selectUserDetail(user_account);
+				resultPacket.sid = genSessionId(user_account);
 			}
 		}else {
 			resultCd = -11;
@@ -81,20 +82,20 @@ public class MemberServiceImpl implements MemberService {
 		if(resultCd ==0) {
 			userAttendService.registerUserAttend(user_account);
 		}
-		loginCheckPacket.setHeader(user_account, resultCd, resultMsg);
+		resultPacket.setHeader(user_account, resultCd, resultMsg);
 				
-		return loginCheckPacket;
+		return resultPacket;
 	}	
 	
 	/* register */
 	@Override
-	public MemberInfoPacket register(UserLevelType userLevel, 
-									 String email, 
-									 String pwd, 
-									 String nickname,
-									 int ch_type,
-									 String ch_id) throws Exception{
-		MemberInfoPacket loginCheckPacket = new MemberInfoPacket();
+	public ResultPacket register(UserLevelType userLevel, 
+								 String email, 
+								 String pwd, 
+								 String nickname,
+								 int ch_type,
+								 String ch_id) throws Exception{
+		ResultPacket resultPacket = new ResultPacket();
 		int resultCd = 0;
 		String resultMsg = "";
 		int user_account= 0;
@@ -114,8 +115,8 @@ public class MemberServiceImpl implements MemberService {
 		
 		if(resultCd == 0) {
 			user_account = vo.getOutParam01();
-			loginCheckPacket.userDetail = userInfoDAO.selectUserDetail(user_account);	
-			loginCheckPacket.sid = genSessionId(user_account);
+			//loginCheckPacket.userDetail = userInfoDAO.selectUserDetail(user_account);	
+			resultPacket.sid = genSessionId(user_account);
 		}else {
 		//set return message
 			switch(resultCd) {
@@ -127,10 +128,9 @@ public class MemberServiceImpl implements MemberService {
 				break;
 			}
 		}
+		resultPacket.setHeader(user_account, resultCd, resultMsg);
 		
-		loginCheckPacket.setHeader(user_account, resultCd, resultMsg);
-		
-		return loginCheckPacket;
+		return resultPacket;
 	}
 	
 	
@@ -141,6 +141,8 @@ public class MemberServiceImpl implements MemberService {
 		
 		//Set  notice and attend flag info
 		memberInitialInfoPacket = userInfoDAO.selectUserInitialInfo(user_account);
+		//Set user Info 
+		memberInitialInfoPacket.userDetail = userInfoDAO.selectUserDetail(user_account);
 		//Set Character Info
 		memberInitialInfoPacket.carryUserCharacter = characterService.selectCarryCharacter(user_account);
 		
@@ -163,7 +165,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	/**
-	 * get sessionId
+	 * Assign SessionId when user login
 	 */
 	private String genSessionId(int user_account) {
 		
