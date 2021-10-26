@@ -13,7 +13,6 @@ import common.util.UserLevelType;
 import com.vassystem.dao.MemberDAO;
 import com.vassystem.dao.UserInfoDAO;
 import com.vassystem.dto.Member;
-import com.vassystem.packet.MemberInfoPacket;
 import com.vassystem.packet.MemberInitialInfoPacket;
 import com.vassystem.packet.ResultPacket;
 

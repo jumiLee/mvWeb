@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -22,6 +23,9 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 	
 	@Resource(name="CharacterDAO") 
 	private CharacterDAO characterDAO; 
+	
+	@Autowired
+	UserItemService userItemService;
 
 	@Override
 	public CharacterPacket selectCharacterList(int user_account) throws Exception {
@@ -52,11 +56,21 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 	public UserCharacter selectCarryCharacter(int user_account) throws Exception{
 	
 		List<UserCharacter> userCharacterList = selectCharacterList(user_account).userCharacterList;
+		UserCharacter userCharacter = new UserCharacter();
 		
-		return userCharacterList.stream()
+		//character basic info 
+		userCharacter =  userCharacterList.stream()
 				.filter(s -> s.carry_flag.equals("Y"))
 				.findAny()
 				.orElse(null);
+		
+		
+		//character Equip Items info
+		userCharacter.char_equip_items = 
+				userItemService.getMyItemWithEquip(2, user_account, userCharacter.char_id, userCharacter.user_char_sn, 0, 0).userCharEquipItemList;
+		
+		return userCharacter;
+		
 	}
 	
 	//update User Character 

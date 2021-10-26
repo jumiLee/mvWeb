@@ -11,7 +11,6 @@ import common.util.ChannelType;
 import common.util.UserLevelType;
 
 import com.vassystem.dto.Member;
-import com.vassystem.packet.MemberInfoPacket;
 import com.vassystem.packet.MemberInitialInfoPacket;
 import com.vassystem.packet.ResultPacket;
 import com.vassystem.service.MemberService;
