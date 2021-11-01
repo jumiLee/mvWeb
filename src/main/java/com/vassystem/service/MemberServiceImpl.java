@@ -116,6 +116,8 @@ public class MemberServiceImpl implements MemberService {
 			user_account = vo.getOutParam01();
 			//loginCheckPacket.userDetail = userInfoDAO.selectUserDetail(user_account);	
 			resultPacket.sid = genSessionId(user_account);
+			//출석등록 
+			userAttendService.registerUserAttend(user_account);
 		}else {
 		//set return message
 			switch(resultCd) {
