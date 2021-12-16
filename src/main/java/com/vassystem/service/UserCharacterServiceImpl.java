@@ -13,6 +13,7 @@ import com.vassystem.dao.CharacterDAO;
 import com.vassystem.dto.CharacterCustInfo;
 import com.vassystem.dto.UserCharacter;
 import com.vassystem.packet.CharacterPacket;
+import com.vassystem.packet.CharacterShapePacket;
 
 import common.util.ParamVO;
 
@@ -51,6 +52,34 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 		return characterPacket;
 	}
 	
+	/*select Character Shape Info */
+	@Override
+	public CharacterShapePacket selectCharacterShapeInfo(int user_account, int char_id, int char_sn) throws Exception {
+		
+		CharacterShapePacket characterShapePacket = new CharacterShapePacket();
+		int resultCd = 0;
+		String resultMsg = "";
+		
+		ParamVO vo = new ParamVO(); 
+		vo.setInParam01(1); 							//job_code
+		vo.setInParam02(user_account); 					//user_account
+		vo.setInParam03(char_id);	//attend_type
+		vo.setInParam04(char_sn);								//day_no
+		
+		UserCharacter userCharacter = characterDAO.selectCharacterShapeInfo(vo);
+		
+		if(userCharacter.char_shape_info == null) {
+			characterShapePacket.resultCd = -1;
+			characterShapePacket.resultMsg = "No character shape information!";
+		}else {
+			characterShapePacket.char_shape_info = userCharacter.char_shape_info;
+		}
+	
+		characterShapePacket.setHeader(user_account, resultCd, resultMsg);
+		
+		return characterShapePacket;
+	}
+	
 	/*select Carry Character List */
 	@Override
 	public UserCharacter selectCarryCharacter(int user_account) throws Exception{
@@ -75,7 +104,7 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 	
 	//update User Character 
 	@Override
-	public CharacterPacket modifyUserCharacter(int job_code, int user_account, int char_id, int user_char_sn, CharacterCustInfo char_cust_info) throws Exception {
+	public CharacterPacket modifyUserCharacter(int job_code, int user_account, int char_id, int user_char_sn, CharacterCustInfo char_cust_info, String char_shape_info) throws Exception {
 			
 		CharacterPacket characterPacket = new CharacterPacket();
 		int resultCd = 0;
@@ -87,13 +116,14 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 		vo.setInParam03(char_id);
 		vo.setInParam04(user_char_sn);
 		vo.setInObjParam01(char_cust_info);
+		vo.setInStrParam01(char_shape_info);
 			
 		characterDAO.modifyUserCharacter(vo);
 			
 		resultCd = vo.getOutParam01();
 		resultMsg = vo.getOutStrParam01();
 			
-		if(resultCd == 0) {
+		if(resultCd == 0 && job_code == 1) { //shape 정보 변경일 경우엔, 캐릭터 정보 전송 안함.
 			characterPacket.carryUserCharacter = selectCarryCharacter(user_account);
 		}
 		characterPacket.setHeader(user_account, resultCd, resultMsg);
