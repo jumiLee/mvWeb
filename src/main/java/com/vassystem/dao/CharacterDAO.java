@@ -14,6 +14,10 @@ public class CharacterDAO extends AbstractDAO {
 		return selectList("character.selectUserCharacterList", user_account); 
 	}
 	
+	public UserCharacter selectCharacterShapeInfo(ParamVO paramVO) throws Exception{ 
+		return (UserCharacter) selectOne("character.selectCharacterShapeInfo", paramVO); 
+	}
+	
 	public Object modifyUserCharacter(ParamVO paramVO) throws Exception{ 
 		return selectOne("character.modifyUserCharacter", paramVO); 
 	}
