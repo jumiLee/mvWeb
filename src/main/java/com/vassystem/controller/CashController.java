@@ -6,23 +6,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.vassystem.packet.CharacterPacket;
-import com.vassystem.service.CharacterService;
 
+import com.vassystem.packet.CashPacket;
+import com.vassystem.service.CashService;
 
 @RestController
-public class CharacterController {
+public class CashController {
 	
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired 
-	private CharacterService characterService;
+	private CashService cashService;
 	
-	/* character Select */
-	@RequestMapping(value="/selectCharacterList.do", produces = "application/json")
+	/* Select item List  */
+	@RequestMapping(value="/selectCashList.do", produces = "application/json")
 	@ResponseBody
-	public CharacterPacket selectCharacterList(@RequestParam int user_account) throws Exception {
+	public CashPacket selectCashList(@RequestParam int user_account, @RequestParam int device_type, @RequestParam int payment_type) throws Exception {
 		
-		return characterService.selectCharacterList(user_account);
+		return cashService.selectCashList(user_account, device_type, payment_type);
 	}
 }

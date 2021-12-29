@@ -11,7 +11,8 @@ import common.util.ChannelType;
 import common.util.UserLevelType;
 
 import com.vassystem.dto.Member;
-import com.vassystem.packet.MemberInfoPacket;
+import com.vassystem.packet.MemberInitialInfoPacket;
+import com.vassystem.packet.ResultPacket;
 import com.vassystem.service.MemberService;
 
 
@@ -37,7 +38,7 @@ public class MemberController {
 	/* login check */
 	@RequestMapping(value="/loginChk.do", produces = "application/json")
 	@ResponseBody
-	public MemberInfoPacket loginCheck(
+	public ResultPacket loginCheck(
 			@RequestParam String email
 			,@RequestParam String pwd
 			) throws Exception {
@@ -48,7 +49,7 @@ public class MemberController {
 	/* member register */
 	@RequestMapping(value="/register.do", produces = "application/json")
 	@ResponseBody
-	public MemberInfoPacket register(
+	public ResultPacket register(
 			 @RequestParam String email
 			,@RequestParam String pwd
 			,@RequestParam String nickname
@@ -62,10 +63,18 @@ public class MemberController {
 		return memberService.register(UserLevelType.GENERAL, email, pwd, nickname, ch_type, ch_id);
 	}
 	
+	/* Get Member Initial Info After Log in */
+	@RequestMapping(value="/getUserInitialInfo.do", produces = "application/json")
+	@ResponseBody
+	public MemberInitialInfoPacket getUserInitialInfo(@RequestParam int user_account ) throws Exception {
+		
+		return memberService.getUserInitialInfo(user_account);
+	}
+	
 	/* AI(test) register */
 	@RequestMapping(value="/registerAI.do", produces = "application/json")
 	@ResponseBody
-	public MemberInfoPacket registerAI(
+	public ResultPacket registerAI(
 			@RequestParam String email
 			,@RequestParam String pwd
 			,@RequestParam String nickname

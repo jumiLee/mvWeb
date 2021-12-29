@@ -17,4 +17,12 @@ public class UserItemDAO extends AbstractDAO {
 	public List<UserCharEquipItem> getMyItemWithEquip(ParamVO paramVO) throws Exception{ 
 		return selectList("userItem.selectMyItemWithEquip", paramVO); 
 	}
+	
+	public Object equipItem(ParamVO paramVO) throws Exception{ 
+		return selectOne("userItem.equipItem", paramVO); 
+	}
+	
+	public Object equipItemAll(ParamVO paramVO) throws Exception{ 
+		return selectOne("userItem.equipItemAll", paramVO); 
+	}
 }

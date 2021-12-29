@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import common.util.ParamVO;
@@ -12,7 +13,8 @@ import common.util.UserLevelType;
 import com.vassystem.dao.MemberDAO;
 import com.vassystem.dao.UserInfoDAO;
 import com.vassystem.dto.Member;
-import com.vassystem.packet.MemberInfoPacket;
+import com.vassystem.packet.MemberInitialInfoPacket;
+import com.vassystem.packet.ResultPacket;
 
 @Service 
 public class MemberServiceImpl implements MemberService {
@@ -25,6 +27,12 @@ public class MemberServiceImpl implements MemberService {
 	@Resource(name="UserInfoDAO") 
 	private UserInfoDAO userInfoDAO; 
 	
+	
+	@Autowired
+	UserCharacterService characterService;
+	
+	@Autowired
+	UserAttendService userAttendService;
 	
 	@Override
 	public Member selectMember(String email, String pwd) throws Exception {
@@ -39,9 +47,9 @@ public class MemberServiceImpl implements MemberService {
 	 * login check
 	 */
 	@Override
-	public MemberInfoPacket loginCheck(String email, String pwd) throws Exception {
+	public ResultPacket loginCheck(String email, String pwd) throws Exception {
 		
-		MemberInfoPacket loginCheckPacket = new MemberInfoPacket();
+		ResultPacket resultPacket = new ResultPacket();
 		Member member = new Member();
 		int resultCd = 0;
 		String resultMsg = "";
@@ -61,27 +69,32 @@ public class MemberServiceImpl implements MemberService {
 				resultMsg = "wrong password";
 			}else {
 				user_account = member.account;			
-				loginCheckPacket.userDetail = userInfoDAO.selectUserDetail(user_account);
-				loginCheckPacket.sid = genSessionId(user_account);
+				//loginCheckPacket.userDetail = userInfoDAO.selectUserDetail(user_account);
+				resultPacket.sid = genSessionId(user_account);
 			}
 		}else {
 			resultCd = -11;
 			resultMsg = "No member exist";
 		}		
-		loginCheckPacket.setHeader(user_account, resultCd, resultMsg);
+		
+		//login success -> register Attend
+		if(resultCd ==0) {
+			userAttendService.registerUserAttend(user_account);
+		}
+		resultPacket.setHeader(user_account, resultCd, resultMsg);
 				
-		return loginCheckPacket;
+		return resultPacket;
 	}	
 	
 	/* register */
 	@Override
-	public MemberInfoPacket register(UserLevelType userLevel, 
-									 String email, 
-									 String pwd, 
-									 String nickname,
-									 int ch_type,
-									 String ch_id) throws Exception{
-		MemberInfoPacket loginCheckPacket = new MemberInfoPacket();
+	public ResultPacket register(UserLevelType userLevel, 
+								 String email, 
+								 String pwd, 
+								 String nickname,
+								 int ch_type,
+								 String ch_id) throws Exception{
+		ResultPacket resultPacket = new ResultPacket();
 		int resultCd = 0;
 		String resultMsg = "";
 		int user_account= 0;
@@ -101,23 +114,40 @@ public class MemberServiceImpl implements MemberService {
 		
 		if(resultCd == 0) {
 			user_account = vo.getOutParam01();
-			loginCheckPacket.userDetail = userInfoDAO.selectUserDetail(user_account);	
-			loginCheckPacket.sid = genSessionId(user_account);
+			//loginCheckPacket.userDetail = userInfoDAO.selectUserDetail(user_account);	
+			resultPacket.sid = genSessionId(user_account);
+			//출석등록 
+			userAttendService.registerUserAttend(user_account);
 		}else {
 		//set return message
 			switch(resultCd) {
 			case -11:
-				resultMsg = "사용중인 이메일";
+				resultMsg = "사용중인 이메일입니다";
 				break;
 			case -12:
-				resultMsg = "사용중인 닉네임";
+				resultMsg = "사용중인 닉네임입니다.";
 				break;
 			}
 		}
+		resultPacket.setHeader(user_account, resultCd, resultMsg);
 		
-		loginCheckPacket.setHeader(user_account, resultCd, resultMsg);
+		return resultPacket;
+	}
+	
+	
+	/* Set and Get initial user information */
+	@Override
+	public MemberInitialInfoPacket getUserInitialInfo(int user_account) throws Exception {
+		MemberInitialInfoPacket memberInitialInfoPacket = new MemberInitialInfoPacket();
 		
-		return loginCheckPacket;
+		//Set  notice and attend flag info
+		memberInitialInfoPacket = userInfoDAO.selectUserInitialInfo(user_account);
+		//Set user Info 
+		memberInitialInfoPacket.userDetail = userInfoDAO.selectUserDetail(user_account);
+		//Set Character Info
+		memberInitialInfoPacket.carryUserCharacter = characterService.selectCarryCharacter(user_account);
+		
+		return memberInitialInfoPacket;
 	}
 	
 	/**
@@ -136,7 +166,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	/**
-	 * get sessionId
+	 * Assign SessionId when user login
 	 */
 	private String genSessionId(int user_account) {
 		

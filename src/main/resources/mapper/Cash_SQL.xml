@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="cash"> 
+
+	<resultMap id="Cash" type="com.vassystem.dto.Cash">
+ 		<result property = "cash_id" 		column = "cash_id"/>
+ 		<result property = "item_nm" 		column = "item_nm"/>
+ 		<result property = "device_type" 	column = "device_type"/>
+ 		<result property = "payment_type" 	column = "payment_type"/>
+ 		<result property = "prod_id" 		column = "prod_id"/>
+ 		<result property = "cash_type_cd"	column = "cash_type_cd"/>
+ 		<result property = "cash_amt" 		column = "cash_amt"/>
+ 		<result property = "cash_dis_amt" 	column = "cash_dis_amt"/>
+ 		<result property = "coin_amt" 		column = "coin_amt"/>
+ 		<result property = "coin_nm" 		column = "coin_nm"/>
+ 		<result property = "coin_desc" 		column = "coin_desc"/>
+ 		<result property = "del_flag" 		column = "del_flag"/>
+ 		<result property = "display_flag" 	column = "display_flag"/>
+ 		<result property = "prod_img" 		column = "prod_img"/>
+	</resultMap>
+
+	<select id="selectCashList" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="Cash"> 
+	{ 
+		call abn_getCashList (
+			#{inParam01, jdbcType = INTEGER, mode = IN},
+			#{inParam02, jdbcType = INTEGER, mode = IN}
+		)
+	}
+	</select>
+	
+	<select id="abn_MgmtCash" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
+	{ 
+		call abn_MgmtCash (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},	<!-- job_code -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam03,	jdbcType = INTEGER, mode = IN},	<!-- frd_account -->
+			#{inParam04,	jdbcType = INTEGER, mode = IN},	<!-- cash_id -->
+			#{inParam05,	jdbcType = INTEGER, mode = IN},	<!-- payment_type -->
+			#{outParam01,  	jdbcType = INTEGER, mode = OUT} <!-- result-->
+		)
+	}
+	</select>
+</mapper>

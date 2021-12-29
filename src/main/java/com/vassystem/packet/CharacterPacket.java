@@ -7,5 +7,6 @@ import com.vassystem.dto.UserCharacter;
 public class CharacterPacket extends HeaderPacket {
 	
 	public String sid;
-	public List<UserCharacter> userCharacterList;	
+	public List<UserCharacter> userCharacterList;
+	public UserCharacter carryUserCharacter;
 }

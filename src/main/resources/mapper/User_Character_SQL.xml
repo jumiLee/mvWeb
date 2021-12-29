@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="character"> 
+
+	<resultMap id="UserCharacter" type="com.vassystem.dto.UserCharacter">
+ 		<result property = "user_account" 		column = "user_account"/>
+ 		<result property = "user_char_sn" 	 	column = "user_char_sn"/>
+ 		<result property = "char_id" 		 	column = "char_id"/>
+ 		<result property = "user_char_lv" 	 	column = "user_char_lv"/>
+ 		<result property = "user_char_exp" 	 	column = "user_char_exp"/>
+ 		<result property = "carry_flag" 	 	column = "carry_flag"/>
+ 		<result property = "char_cust_info"	 	column = "char_cust_info" javaType="com.vassystem.dto.CharacterCustInfo" typeHandler="common.util.JsonTypeHandler"/>
+ 		<result property = "char_shape_info" 	column = "char_shape_info"/>
+ 		<result property = "create_dt" 			column = "create_dt"/>
+ 		<result property = "char_nm" 			column = "char_nm"/>
+ 		<result property = "char_type" 			column = "char_type"/>
+	</resultMap>
+
+	<select id="selectUserCharacterList" statementType="CALLABLE" parameterType="int" resultMap ="UserCharacter"> 
+	{ 
+		call abn_getCharList (	
+			1 	 
+			,#{user_account, jdbcType = INTEGER, mode = IN}
+			,null
+			,null
+		)
+	}
+	</select>
+	
+	<select id="selectCharacterShapeInfo" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="UserCharacter"> 
+	{ 
+		call abn_getCharShapeInfo (	
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},	<!-- job_code -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam03, 	jdbcType = INTEGER, mode = IN},	<!-- char_id -->
+			#{inParam04, 	jdbcType = INTEGER, mode = IN}	<!-- user_char_sn -->
+		)
+	}
+	</select>
+	
+	<select id="modifyUserCharacter" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
+	{ 
+		call abn_MgmtUserCharacter (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},	<!-- job_code -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam03, 	jdbcType = INTEGER, mode = IN},	<!-- char_id -->
+			#{inParam04, 	jdbcType = INTEGER, mode = IN},	<!-- user_char_sn -->
+			#{inObjParam01,	javaType = com.vassystem.dto.CharacterCustInfo, typeHandler=common.util.JsonTypeHandler, mode = IN},	<!-- char_cust_info(json) -->
+			#{inStrParam01,	jdbcType = VARCHAR, javaType=java.lang.String, mode = IN},	<!-- user_shape_info -->
+			#{outParam01,  	jdbcType = INTEGER, mode = OUT},<!-- result code -->
+	   		#{outStrParam01,jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
+		)
+	}
+	</select>
+</mapper>

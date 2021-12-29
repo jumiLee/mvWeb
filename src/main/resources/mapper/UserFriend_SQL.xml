@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="userFriend"> 
+
+	<resultMap id="UserFriend" type="com.vassystem.dto.UserFriend">
+ 		<result property = "user_account" 		column = "user_account"/>
+ 		<result property = "frd_account" 		column = "frd_account"/>
+ 		<result property = "frd_status_cd" 		column = "frd_status_cd"/>
+ 		<result property = "frd_nickname" 		column = "frd_nickname"/>
+ 		<result property = "frd_friend_cnt"		column = "frd_friend_cnt"/>
+ 		<result property = "frd_following_cnt"	column = "frd_following_cnt"/>
+	</resultMap>
+
+	<select id="mgmtFriend" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
+	{ 
+		call abn_MgmtFriend (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},	<!-- job_code -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam03, 	jdbcType = INTEGER, mode = IN},	<!-- frd_account -->
+			#{outParam01,  	jdbcType = INTEGER, mode = OUT},<!-- result code -->
+	   		#{outStrParam01,jdbcType = VARCHAR, mode = OUT}	<!-- result message -->
+		)
+	}
+	</select>
+	
+	<select id="selectFriendList" statementType="CALLABLE" parameterType="common.util.ParamVO" resultMap ="UserFriend"> 
+	{ 
+		call abn_getFriendList (
+			#{inParam01, jdbcType = INTEGER, mode = IN},<!-- job_code -->
+			#{inParam02, jdbcType = INTEGER, mode = IN}	<!-- user_account -->
+		)
+	}
+	</select>
+</mapper>

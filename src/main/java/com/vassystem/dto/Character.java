@@ -14,7 +14,7 @@ public class Character {
 	public int char_max_lv;
 	public int char_lv;
 	public String char_desc;
-	public int del_flag;
+	public String del_flag;
 	public Date del_dt;
 	public String char_shape_info;
 }

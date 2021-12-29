@@ -1,13 +1,17 @@
 package com.vassystem.service;
 
-import java.util.List;
-import com.vassystem.dto.UserAttend;
+import com.vassystem.packet.ResultPacket;
+import com.vassystem.packet.UserAttendPacket;
 
 public interface UserAttendService {
 	
-	/*select Member */
-	List<UserAttend> selectUserAttendList(int user_account) throws Exception;
+	/*attend List  */
+	UserAttendPacket selectUserAttendList(int user_account) throws Exception;
 
+	/* attend Register */
+	ResultPacket registerUserAttend(int user_account) throws Exception;
+	
 	/* session check */
 	int checkSession(int user_account, String sid);
+
 }
