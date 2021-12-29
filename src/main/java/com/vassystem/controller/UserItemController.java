@@ -66,4 +66,17 @@ public class UserItemController {
 		
 		return userItemService.equipItem(job_code, user_account, char_id, user_char_sn, item_id, item_uniqueID, item_category, item_type);
 	}	
+	
+	/* Equip Item All (일괄 해제 및 장착 */
+	@RequestMapping(value="/equipItemAll.do", produces =" application/json")
+	@ResponseBody
+	public UserCharEquipItemPacket equipItemAll(@RequestParam int user_account,
+			 									@RequestParam int char_id,
+			 									@RequestParam int user_char_sn,
+			 									@RequestParam String item_uniqueID_ary,
+			 									@RequestParam int item_category,
+												@RequestParam int item_type) throws Exception { 
+		
+		return userItemService.equipItemAll(user_account, char_id, user_char_sn, item_uniqueID_ary, item_category, item_type);
+	}	
 }

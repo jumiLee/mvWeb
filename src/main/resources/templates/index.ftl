@@ -32,7 +32,7 @@
 	<a href="./getMyItem.do?user_account=${user_account}&item_id=&char_id=&user_char_sn=&item_id_array=" target="_blank">나의 아이템조회(장착
 	포함) </a> <br>
 	<a href="./equipItem.do?job_code=&user_account=${user_account}&char_id=&user_char_sn=&item_id=&item_uniqueID=" target="_blank">아이템 장착  </a> <br>
-	
+	<a href="./equipItemAll.do?job_code=&user_account=${user_account}&char_id=&user_char_sn=&item_uniqueID_ary=&item_category=&item_type=" target="_blank">아이템 장착(일괄) </a> <br>
 	
 	<a href="./selectReceiveBox.do?job_code=&user_account=${user_account}" target="_blank">메세지 박스 조회 </a> <br>
 	<a href="./mgmtReceiveBox.do?job_code=1&user_account=${user_account}&receive_sn=" target="_blank">메세지 박스 받기  </a> <br>

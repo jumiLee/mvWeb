@@ -102,4 +102,17 @@
 		)
 	}
 	</select>
+	
+	<select id="equipItemAll" statementType="CALLABLE" parameterType="common.util.ParamVO"> 
+	{ 
+		call abn_mgmtEquipItemAll (
+			#{inParam01, 	jdbcType = INTEGER, mode = IN},	<!-- user_account -->
+			#{inParam02, 	jdbcType = INTEGER, mode = IN},	<!-- char_id -->
+			#{inParam03, 	jdbcType = INTEGER, mode = IN},	<!-- user_char_sn -->
+			#{inStrParam01,	jdbcType = VARCHAR, mode = IN},	<!-- item_uniqueID_Ary -->
+			#{outParam01,  	jdbcType = INTEGER, mode = OUT},<!-- result code -->
+	   		#{outStrParam01,jdbcType = VARCHAR,	mode = OUT}	<!-- result message -->
+		)
+	}
+	</select>
 </mapper>

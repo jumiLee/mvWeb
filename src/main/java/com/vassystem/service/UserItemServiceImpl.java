@@ -96,4 +96,33 @@ public class UserItemServiceImpl implements UserItemService {
 		
 		return userCharEquipItemPacket;
 	}
+	
+	// Equip Item All
+		@Override
+		public UserCharEquipItemPacket equipItemAll(int user_account, int char_id, int user_char_sn, String item_uniqueID_Ary, int item_category, int item_type) throws Exception {
+			
+			UserCharEquipItemPacket userCharEquipItemPacket = new UserCharEquipItemPacket();
+			int resultCd = 0;
+			String resultMsg = "";
+			
+			//Equip Item Process
+			ParamVO vo = new ParamVO(); 
+			vo.setInParam01(user_account); 
+			vo.setInParam02(char_id); 
+			vo.setInParam03(user_char_sn);
+			vo.setInStrParam01(item_uniqueID_Ary);
+			
+			userItemDAO.equipItemAll(vo);
+			
+			resultCd = vo.getOutParam01();
+			resultMsg = vo.getOutStrParam01();
+			
+			if(resultCd == 0) {
+				//Get refreshed Equip Item Data 
+				userCharEquipItemPacket = this.getMyItemWithEquip(1,user_account,char_id, user_char_sn,item_category, item_type );
+			}
+			userCharEquipItemPacket.setHeader(user_account, resultCd, resultMsg);
+			
+			return userCharEquipItemPacket;
+		}
 }
