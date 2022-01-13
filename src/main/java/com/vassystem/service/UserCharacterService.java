@@ -19,4 +19,8 @@ public interface UserCharacterService {
 	
 	/* update User Character */
 	CharacterPacket modifyUserCharacter(int job_code, int user_account, int char_id, int user_char_sn, CharacterCustInfo char_cust_info, String char_shape_info) throws Exception;
+
+	/* Create Character*/
+	CharacterPacket createCharacter(int user_account) throws Exception;
+	
 }

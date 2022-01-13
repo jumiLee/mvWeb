@@ -39,6 +39,14 @@ public class UserCharacterController {
 		return characterService.selectCharacterShapeInfo(user_account, char_id, char_sn );
 	}
 	
+	/* create Character */
+	@RequestMapping(value="/createUserCharacter.do", produces = "application/json")
+	@ResponseBody
+	public CharacterPacket createUserCharacter(	@RequestParam int user_account) throws Exception {
+		
+		return characterService.createCharacter(user_account);
+	}
+	
 	/* update character info (json 형태의 캐릭터 장착 변경사항 저장) */
 	@RequestMapping(value="/modifyUserCharacter.do", produces = "application/json")
 	@ResponseBody
@@ -70,6 +78,19 @@ public class UserCharacterController {
 		resultPacket.setHeader(characterPacket.account, characterPacket.resultCd, characterPacket.resultMsg);
 		
 		return resultPacket;
+	}
+	
+	//대표 캐릭터 변경
+	@RequestMapping(value="/changeMainCharacter.do", produces = "application/json")
+	@ResponseBody
+	public CharacterPacket changeMainCharacter(@RequestParam int user_account, 
+									 			@RequestParam 	int char_id,
+									 			@RequestParam int user_char_sn) throws Exception {
+		
+		CharacterPacket characterPacket = new CharacterPacket();
+		characterPacket = characterService.modifyUserCharacter(3, user_account, char_id, user_char_sn, null, null);
+		
+		return characterPacket;
 				
 	}
 }
