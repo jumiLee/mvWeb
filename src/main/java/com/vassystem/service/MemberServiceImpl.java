@@ -111,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
 			memberInfoPacket.userDetail = userInfoDAO.selectUserDetail(user_account);	
 		}
 		
-		resultPacket.setHeader(user_account, resultPacket.resultCd, resultPacket.resultMsg);
+		memberInfoPacket.setHeader(user_account, resultPacket.resultCd, resultPacket.resultMsg);
 				
 		return memberInfoPacket;
 	}	

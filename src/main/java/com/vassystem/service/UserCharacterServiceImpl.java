@@ -151,8 +151,8 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 		
 		ParamVO vo = new ParamVO(); 			
 		vo.setInParam01(user_account); 
-		vo.setInParam02(1); 
-		vo.setInStrParam01("N");
+		vo.setInParam02(1); 		//char_id
+		vo.setInStrParam01("N"); 	//carry_flag
 		
 		characterDAO.createUserCharacter(vo);
 		
