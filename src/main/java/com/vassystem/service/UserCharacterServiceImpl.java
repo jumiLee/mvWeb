@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,7 @@ import com.vassystem.dto.CharacterCustInfo;
 import com.vassystem.dto.UserCharacter;
 import com.vassystem.packet.CharacterPacket;
 import com.vassystem.packet.CharacterShapePacket;
+import com.vassystem.packet.CharacterSimplePacket;
 
 import common.util.ParamVO;
 
@@ -144,9 +144,10 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 	
 	/* Create Character*/
 	@Override
-	public CharacterPacket createCharacter(int user_account) throws Exception {
-		CharacterPacket characterPacket = new CharacterPacket();
+	public CharacterSimplePacket createCharacter(int user_account) throws Exception {
+		CharacterSimplePacket characterPacket = new CharacterSimplePacket();
 		int resultCd = 0;
+		
 		String resultMsg = "";
 		
 		ParamVO vo = new ParamVO(); 			
@@ -158,8 +159,13 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 		
 		resultCd = vo.getOutParam01();
 		
-		if(resultCd ==0) {
-			characterPacket = selectCharacterList(user_account);
+		if(resultCd == 0) {
+			List<UserCharacter> userCharacterList = characterDAO.selectCharacterList(user_account);
+			
+			characterPacket.userCharacter = userCharacterList.stream()
+					.filter(s -> s.user_char_sn == vo.getOutParam02())
+					.findAny()
+					.orElse(null);
 		}else {
 			resultMsg = "Failt to create character!";
 		}
