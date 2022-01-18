@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vassystem.dto.CharacterCustInfo;
 import com.vassystem.packet.CharacterPacket;
 import com.vassystem.packet.CharacterShapePacket;
+import com.vassystem.packet.CharacterSimplePacket;
 import com.vassystem.packet.ResultPacket;
 import com.vassystem.service.UserCharacterService;
 
@@ -42,7 +43,7 @@ public class UserCharacterController {
 	/* create Character */
 	@RequestMapping(value="/createUserCharacter.do", produces = "application/json")
 	@ResponseBody
-	public CharacterPacket createUserCharacter(	@RequestParam int user_account) throws Exception {
+	public CharacterSimplePacket createUserCharacter(	@RequestParam int user_account) throws Exception {
 		
 		return characterService.createCharacter(user_account);
 	}
