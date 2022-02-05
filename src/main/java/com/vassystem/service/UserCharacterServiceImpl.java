@@ -39,11 +39,6 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 		
 		List<UserCharacter> userCharacterList = characterDAO.selectCharacterList(user_account);
 		
-		if(CollectionUtils.isEmpty(userCharacterList)) {
-			resultCd = -1;
-			resultMsg ="There is no character";
-		}
-		
 		characterPacket.userCharacterList = userCharacterList;
 		
 		//set character equipped item info
