@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import com.vassystem.dao.CharacterDAO;
 import com.vassystem.dto.CharacterCustInfo;
@@ -96,7 +95,7 @@ public class UserCharacterServiceImpl implements UserCharacterService {
 		userCharacter =  userCharacterList.stream()
 				.filter(s -> s.carry_flag.equals("Y"))
 				.findAny()
-				.orElse(null);
+				.orElse(new UserCharacter());
 		
 		
 		//character Equip Items info
